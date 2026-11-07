@@ -1,0 +1,501 @@
+{
+  "editor": {
+    "title": "Listening Test 1 (Cambridge IELTS 17)",
+    "series": "Academic Test 17",
+    "label": "Test 1 Listening",
+    "type": "listening",
+    "time": 30,
+    "labels": true,
+    "parts": [
+      {
+        "passageTitle": "Section 1",
+        "instruction": "You will hear a conversation. Questions 1–10: complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+        "paragraphs": [],
+        "audioUrl": "tests/audio/cam17-listening-test-1-part1.mp3",
+        "groups": [
+          {
+            "type": "GAP",
+            "heading": "Questions 1–10",
+            "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+            "box": "Buckworth Conservation Group",
+            "lines": [
+              {
+                "kind": "h",
+                "text": "Regular activities"
+              },
+              {
+                "kind": "h",
+                "text": "Beach"
+              },
+              {
+                "kind": "b",
+                "text": "making sure the beach does not have [litter] on it"
+              },
+              {
+                "kind": "b",
+                "text": "no [dogs]"
+              },
+              {
+                "kind": "h",
+                "text": "Nature reserve"
+              },
+              {
+                "kind": "b",
+                "text": "maintaining paths"
+              },
+              {
+                "kind": "b",
+                "text": "nesting boxes for birds installed"
+              },
+              {
+                "kind": "b",
+                "text": "next task is taking action to attract [insects] to the place"
+              },
+              {
+                "kind": "b",
+                "text": "identifying types of [butterflies]"
+              },
+              {
+                "kind": "b",
+                "text": "building a new [wall]"
+              },
+              {
+                "kind": "h",
+                "text": "Forthcoming events"
+              },
+              {
+                "kind": "h",
+                "text": "Saturday"
+              },
+              {
+                "kind": "b",
+                "text": "meet at Dunsmore Beach car park"
+              },
+              {
+                "kind": "b",
+                "text": "walk across the sands and reach the [island]"
+              },
+              {
+                "kind": "b",
+                "text": "take a picnic"
+              },
+              {
+                "kind": "b",
+                "text": "wear appropriate [boots]"
+              },
+              {
+                "kind": "h",
+                "text": "Woodwork session"
+              },
+              {
+                "kind": "b",
+                "text": "suitable for [beginners] to participate in"
+              },
+              {
+                "kind": "b",
+                "text": "making [spoons] out of wood"
+              },
+              {
+                "kind": "b",
+                "text": "17th, from 10 a.m. to 3 p.m."
+              },
+              {
+                "kind": "b",
+                "text": "cost of session (no camping): £ [35/thirty five]"
+              }
+            ],
+            "items": [],
+            "options": []
+          }
+        ]
+      },
+      {
+        "passageTitle": "Section 2",
+        "instruction": "You will hear a guide describing a boat trip. Questions 11–20.",
+        "paragraphs": [],
+        "audioUrl": "tests/audio/cam17-listening-test-1-part2.mp3",
+        "groups": [
+          {
+            "type": "MCQ",
+            "heading": "Questions 11–14",
+            "instruction": "Boat trip round Tasmania. Choose the correct letter, A, B or C.",
+            "box": "",
+            "lines": [],
+            "options": [],
+            "items": [
+              {
+                "text": "What is the maximum number of people who can stand on each side of the boat?",
+                "answer": "",
+                "options": [
+                  "9",
+                  "15",
+                  "18"
+                ],
+                "correct": [
+                  "A"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "What colour are the tour boats?",
+                "answer": "",
+                "options": [
+                  "dark red",
+                  "jet black",
+                  "light green"
+                ],
+                "correct": [
+                  "C"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "Which lunchbox is suitable for someone who doesn’t eat meat or fish?",
+                "answer": "",
+                "options": [
+                  "Lunchbox 1",
+                  "Lunch box 2",
+                  "Lunch box 3"
+                ],
+                "correct": [
+                  "B"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "What should people do with their litter?",
+                "answer": "",
+                "options": [
+                  "take it home",
+                  "hand it to a member of staff",
+                  "put it in the bins provided on the boat"
+                ],
+                "correct": [
+                  "B"
+                ],
+                "alts": ""
+              }
+            ]
+          },
+          {
+            "type": "MCQ",
+            "heading": "Questions 15 and 16",
+            "instruction": "Choose TWO letters, A–E.",
+            "box": "",
+            "lines": [],
+            "options": [],
+            "items": [
+              {
+                "text": "Which TWO features of the lighthouse does Lou mention?",
+                "answer": "",
+                "options": [
+                  "why it was built",
+                  "who built it",
+                  "how long it took to build",
+                  "who staffed it",
+                  "what it was built with"
+                ],
+                "correct": [
+                  "A",
+                  "D"
+                ],
+                "alts": ""
+              }
+            ]
+          },
+          {
+            "type": "MCQ",
+            "heading": "Questions 17 and 18",
+            "instruction": "Choose TWO letters, A–E.",
+            "box": "",
+            "lines": [],
+            "options": [],
+            "items": [
+              {
+                "text": "Which TWO types of creature might come close to the boat?",
+                "answer": "",
+                "options": [
+                  "sea eagles",
+                  "fur seals",
+                  "dolphins",
+                  "whales",
+                  "penguins"
+                ],
+                "correct": [
+                  "B",
+                  "C"
+                ],
+                "alts": ""
+              }
+            ]
+          },
+          {
+            "type": "MCQ",
+            "heading": "Questions 19 and 20",
+            "instruction": "Choose TWO letters, A–E.",
+            "box": "",
+            "lines": [],
+            "options": [],
+            "items": [
+              {
+                "text": "Which TWO points does Lou make about the caves?",
+                "answer": "",
+                "options": [
+                  "Only large tourist boats can visit them.",
+                  "The entrances to them are often blocked.",
+                  "It is too dangerous for individuals to go near them.",
+                  "Someone will explain what is inside them.",
+                  "They cannot be reached on foot."
+                ],
+                "correct": [
+                  "D",
+                  "E"
+                ],
+                "alts": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "passageTitle": "Section 3",
+        "instruction": "You will hear two students discussing their veterinary science work experience. Questions 21–30.",
+        "paragraphs": [],
+        "audioUrl": "tests/audio/cam17-listening-test-1-part3.mp3",
+        "groups": [
+          {
+            "type": "MCQ",
+            "heading": "Questions 21–26",
+            "instruction": "Work experience for veterinary science students. Choose the correct letter, A, B or C.",
+            "box": "",
+            "lines": [],
+            "options": [],
+            "items": [
+              {
+                "text": "What problem did both Diana and Tim have when arranging their work experience?",
+                "answer": "",
+                "options": [
+                  "make initial contact with suitable farms",
+                  "organising transport to and from the farm",
+                  "finding a placement for the required length of time"
+                ],
+                "correct": [
+                  "A"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "Tim was pleased to be able to help",
+                "answer": "",
+                "options": [
+                  "a lamb that had a broken leg.",
+                  "a sheep that was having difficult giving birth.",
+                  "a newly born lamb that was having trouble feeding."
+                ],
+                "correct": [
+                  "B"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "Diana says the sheep on her farm",
+                "answer": "",
+                "options": [
+                  "were of various different varieties.",
+                  "were mainly reared for their meat.",
+                  "had better quality wool than sheep on the hills."
+                ],
+                "correct": [
+                  "B"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "What did the students learn about adding supplements to chicken feed?",
+                "answer": "",
+                "options": [
+                  "These should only be given if specially needed.",
+                  "It is worth paying extra for the most effective ones.",
+                  "The amount given at one time should be limited."
+                ],
+                "correct": [
+                  "A"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "What happened when Diana was working with dairy cows?",
+                "answer": "",
+                "options": [
+                  "She identified some cows incorrectly.",
+                  "She accidentally threw some milk away.",
+                  "She made a mistake when storing milk."
+                ],
+                "correct": [
+                  "C"
+                ],
+                "alts": ""
+              },
+              {
+                "text": "What did both farmers mention about vets and farming?",
+                "answer": "",
+                "options": [
+                  "Vets are failing to cope with some aspects of animal health.",
+                  "There needs to be a fundamental change in the training of vets.",
+                  "Some jobs could be done by the farmer rather than by a vet."
+                ],
+                "correct": [
+                  "C"
+                ],
+                "alts": ""
+              }
+            ]
+          },
+          {
+            "type": "MATCH",
+            "heading": "Questions 27–30",
+            "instruction": "What opinion do the students give about each of the following modules on their veterinary science course? Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
+            "box": "",
+            "lines": [],
+            "options": [
+              "Tim found this easier than expected.",
+              "Tim thought this was not very clearly organised.",
+              "Diana may do some further study on this.",
+              "They both found the reading required for this was difficult.",
+              "Tim was shocked at something he learned on this module.",
+              "They were both surprised how little is known about some aspects of this."
+            ],
+            "items": [
+              {
+                "text": "Medical terminology",
+                "answer": "A",
+                "options": [],
+                "correct": [],
+                "alts": ""
+              },
+              {
+                "text": "Diet and nutrition",
+                "answer": "E",
+                "options": [],
+                "correct": [],
+                "alts": ""
+              },
+              {
+                "text": "Animal disease",
+                "answer": "F",
+                "options": [],
+                "correct": [],
+                "alts": ""
+              },
+              {
+                "text": "Wildlife medication",
+                "answer": "C",
+                "options": [],
+                "correct": [],
+                "alts": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "passageTitle": "Section 4",
+        "instruction": "You will hear a lecture about labyrinths. Questions 31–40.",
+        "paragraphs": [],
+        "audioUrl": "tests/audio/cam17-listening-test-1-part4.mp3",
+        "groups": [
+          {
+            "type": "GAP",
+            "heading": "Questions 31–40",
+            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+            "box": "Labyrinths",
+            "lines": [
+              {
+                "kind": "h",
+                "text": "Definition"
+              },
+              {
+                "kind": "b",
+                "text": "a winding spiral path leading to a central area"
+              },
+              {
+                "kind": "h",
+                "text": "Labyrinths compared with mazes"
+              },
+              {
+                "kind": "b",
+                "text": "Mazes are a type of [puzzle]"
+              },
+              {
+                "kind": "b",
+                "text": "– [logic] is needed to navigate through a maze"
+              },
+              {
+                "kind": "b",
+                "text": "– the word ‘maze’ is derived from a word meaning a feeling of [confusion]"
+              },
+              {
+                "kind": "b",
+                "text": "Labyrinths represent a journey through life"
+              },
+              {
+                "kind": "b",
+                "text": "– they have frequently been used in [meditation] and prayer"
+              },
+              {
+                "kind": "h",
+                "text": "Early examples of the labyrinth spiral"
+              },
+              {
+                "kind": "b",
+                "text": "Ancient carvings on [stone] have been found across many cultures"
+              },
+              {
+                "kind": "b",
+                "text": "The Pima, a Native American tribe, wove the symbol on baskets"
+              },
+              {
+                "kind": "b",
+                "text": "Ancient Greeks used the symbol on [coins]"
+              },
+              {
+                "kind": "h",
+                "text": "Walking labyrinths"
+              },
+              {
+                "kind": "b",
+                "text": "The largest surviving example of a turf labyrinth once had a big [tree] at its centre"
+              },
+              {
+                "kind": "h",
+                "text": "Labyrinths nowadays"
+              },
+              {
+                "kind": "b",
+                "text": "Believed to have a beneficial impact on mental and physical health, e.g., walking a maze can reduce a person’s [breathing] rate"
+              },
+              {
+                "kind": "b",
+                "text": "Used in medical and health and fitness settings and also prisons"
+              },
+              {
+                "kind": "b",
+                "text": "Popular with patients, visitors and staff in hospitals"
+              },
+              {
+                "kind": "b",
+                "text": "– patients who can’t walk can use ‘finger labyrinths’ made from [paper]"
+              },
+              {
+                "kind": "b",
+                "text": "– research has shown that Alzheimer’s sufferers experience less [anxiety]"
+              }
+            ],
+            "items": [],
+            "options": []
+          }
+        ]
+      }
+    ]
+  }
+}
