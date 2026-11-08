@@ -190,19 +190,23 @@ if (!window.supabase) {
 
   async function loadSubmissions() {
     const filter = $('testFilter').value;
-    let query = client.from('submissions').select('id,test_id,user_id,kind,answers,band,teacher_comment,reviewed_at,created_at').order('created_at', { ascending: false });
+    let query = client.from('submissions').select('id,test_id,user_id,guest_name,kind,answers,band,teacher_comment,reviewed_at,created_at').order('created_at', { ascending: false });
     if (filter) query = query.eq('test_id', filter);
     const { data, error } = await query;
     if (error) { $('list').innerHTML = `<p class="error">Could not load answers: ${esc(error.message)}</p>`; return; }
     if (!data.length) { $('list').innerHTML = '<p class="empty">No answers yet.</p>'; return; }
-    // Group the answers under one title per student: name, then email.
+    // Group the answers under one title per student (or per guest nickname): name, then email.
     const groups = new Map();
     data.forEach(s => {
-      if (!groups.has(s.user_id)) groups.set(s.user_id, []);
-      groups.get(s.user_id).push(s);
+      const key = s.user_id ? 'user:' + s.user_id : 'guest:' + (s.guest_name || '');
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(s);
     });
-    $('list').innerHTML = [...groups].map(([uid, items]) => {
-      const who = studentLabel(uid);
+    $('list').innerHTML = [...groups].map(([key, items]) => {
+      const first = items[0];
+      const who = first.user_id
+        ? studentLabel(first.user_id)
+        : { name: first.guest_name || 'Guest', email: 'Guest, no account' };
       return `<section class="student">
         <h2 class="student-title">${esc(who.name)}
           <span>${esc(who.email)} · ${items.length} ${items.length === 1 ? 'answer' : 'answers'}</span>

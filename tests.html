@@ -30,6 +30,10 @@ p{line-height:1.6;color:var(--muted)}
 .test{border-color:var(--line)}
 .subgroup{margin-top:18px;padding-left:12px;border-left:3px solid var(--line)}
 .subgroup h3{margin:0;color:var(--text);font-size:1rem}
+.nick-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nick-form input{flex:1;min-width:180px;padding:10px 12px;border:1px solid #dde3ea;border-radius:8px;font:inherit}
+.nick-form button{background:var(--primary);color:#fff;font:inherit;font-weight:700;padding:10px 16px;border:0;border-radius:8px;cursor:pointer}
+.nick-note{font-size:.95rem}
 </style>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/theme.js"></script>
@@ -40,6 +44,15 @@ p{line-height:1.6;color:var(--muted)}
 <main>
   <h1 id="pageTitle">Tests</h1>
   <p id="status">Checking your session…</p>
+
+  <section id="guestBox" class="card" hidden>
+    <h2>Your nickname</h2>
+    <p class="nick-note">You can take tests without an account. Choose a nickname: your teacher sees it with your answers.</p>
+    <form id="nickForm" class="nick-form">
+      <input id="nickInput" type="text" maxlength="40" placeholder="e.g. Maya" autocomplete="nickname" required>
+      <button type="submit">Save nickname</button>
+    </form>
+  </section>
 
   <div id="testList"></div>
 </main>
@@ -107,7 +120,33 @@ if (!window.supabase) {
     }).join('');
   }
 
+  // Guests have no account. They choose a nickname, kept in this browser under "guestNickname".
+  // The test pages read the same key when they save answers.
+  const NICK_KEY = 'guestNickname';
+  function getNickname() {
+    try { return (localStorage.getItem(NICK_KEY) || '').trim(); } catch (e) { return ''; }
+  }
+  function setNickname(name) {
+    try { localStorage.setItem(NICK_KEY, name); } catch (e) { /* private mode: the nickname lasts only this page */ }
+  }
+  let signedIn = false;
+
+  function showGuestStatus() {
+    const nick = getNickname();
+    $('status').textContent = nick
+      ? 'Taking tests as ' + nick + '. Sign in to keep your scores in "My results".'
+      : 'Choose a nickname below to start a test. No account needed.';
+    $('nickInput').value = nick;
+    $('guestBox').hidden = false;
+  }
+
   async function openTest(id) {
+    if (!signedIn && !getNickname()) {
+      $('guestBox').scrollIntoView({ behavior: 'smooth' });
+      $('nickInput').focus();
+      alert('Please choose a nickname first.');
+      return;
+    }
     // Open the tab first so the browser does not block it, then load the test into it.
     const win = window.open('', '_blank');
     const { data, error } = await client.from('tests').select('html').eq('id', id).single();
@@ -131,18 +170,31 @@ if (!window.supabase) {
   }
 
   async function init() {
-    const { data, error } = await client.auth.getSession();
-    if (error || !data.session) { window.location.replace('login.html'); return; }
-    const user = data.session.user;
-    $('status').textContent = 'Signed in as ' + user.email + '.';
     if (SKILL_MODE) {
       $('pageTitle').textContent = SKILL_NAMES[SKILL] + ' tests';
       document.title = SKILL_NAMES[SKILL] + ' tests | IELTS Academic Practice';
     }
 
-    // Admins are the users listed in the "admins" table. The database policies enforce this too.
-    const { data: admin } = await client.from('admins').select('user_id').eq('user_id', user.id).maybeSingle();
-    const isAdmin = !!admin;
+    // Signed-in users get their email shown and admin tools. Guests get the nickname box.
+    const { data } = await client.auth.getSession();
+    const session = data.session;
+    signedIn = !!session;
+    let isAdmin = false;
+    if (session) {
+      $('status').textContent = 'Signed in as ' + session.user.email + '.';
+      // Admins are the users listed in the "admins" table. The database policies enforce this too.
+      const { data: admin } = await client.from('admins').select('user_id').eq('user_id', session.user.id).maybeSingle();
+      isAdmin = !!admin;
+    } else {
+      showGuestStatus();
+      $('nickForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const name = $('nickInput').value.trim();
+        if (!name) return;
+        setNickname(name.slice(0, 40));
+        showGuestStatus();
+      });
+    }
     await loadTests(isAdmin);
 
     $('testList').addEventListener('click', e => {
@@ -153,7 +205,7 @@ if (!window.supabase) {
     });
   }
 
-  init().catch(() => window.location.replace('login.html'));
+  init().catch(() => { $('status').textContent = 'Could not load the tests. Please refresh the page.'; });
 
 }
 </script>

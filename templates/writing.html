@@ -256,8 +256,12 @@ textarea.essay { flex: 1; min-height: 320px; width: 100%; padding: 14px; border:
       'sb_publishable_W1BJsbUOZdR0dm5Ai_yHJg_J64HYtPH'
     );
     const { data } = await sb.auth.getSession();
-    if (!data.session) return 'You are not signed in, so the answers were not saved.';
-    const { error } = await sb.from('submissions').insert({ test_id: TEST.id, kind, answers });
+    // Guests (no account) are saved under the nickname chosen on the Tests page.
+    const nickname = (function () { try { return (localStorage.getItem('guestNickname') || '').trim(); } catch (e) { return ''; } })();
+    if (!data.session && !nickname) return 'Choose a nickname on the Tests page, so your answers can be saved.';
+    const row = { test_id: TEST.id, kind, answers };
+    if (!data.session) row.guest_name = nickname.slice(0, 40);
+    const { error } = await sb.from('submissions').insert(row);
     return error ? error.message : null;
   };
 </script>

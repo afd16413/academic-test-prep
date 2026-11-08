@@ -610,19 +610,26 @@ select { padding: 6px 8px; font-size: 14px; max-width: 100%; border: 1px solid v
       'sb_publishable_W1BJsbUOZdR0dm5Ai_yHJg_J64HYtPH'
     );
     const { data } = await sb.auth.getSession();
-    if (!data.session) return; // not signed in: nothing saved
-    const { error } = await sb.from('results').insert({
-      test_id: window.TEST_DATA.id,
-      score, total, answers
-    });
-    if (error) console.error('Could not save result:', error);
+    // Guests (no account) are saved under the nickname chosen on the Tests page.
+    const nickname = (function () { try { return (localStorage.getItem('guestNickname') || '').trim(); } catch (e) { return ''; } })();
+    if (!data.session && !nickname) return; // no account and no nickname: nothing saved
+    if (data.session) {
+      // "My results" is only for signed-in students.
+      const { error } = await sb.from('results').insert({
+        test_id: window.TEST_DATA.id,
+        score, total, answers
+      });
+      if (error) console.error('Could not save result:', error);
+    }
     // Teachers review attempts from "submissions", with each answer and the correct one.
     const kind = window.TEST_DATA.type === 'listening' ? 'listening' : 'reading';
-    const { error: subError } = await sb.from('submissions').insert({
+    const row = {
       test_id: window.TEST_DATA.id,
       kind,
       answers: { score, total, items: marks || [] }
-    });
+    };
+    if (!data.session) row.guest_name = nickname.slice(0, 40);
+    const { error: subError } = await sb.from('submissions').insert(row);
     if (subError) console.error('Could not save submission:', subError);
   };
 <\/script>
