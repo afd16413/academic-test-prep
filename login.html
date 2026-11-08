@@ -14,7 +14,7 @@
     .card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:0 18px 50px #14263d0c}.card h2{margin:0 0 8px;color:var(--primary);font-size:1.55rem}.sub{margin:0 0 24px;color:var(--muted);line-height:1.5;font-size:.94rem}
     label{display:block;font-weight:700;font-size:.9rem;margin:16px 0 7px}input{width:100%;padding:13px 14px;border:1px solid #c5cdd8;border-radius:9px;background:var(--surface);color:var(--ink);font:inherit}input:focus{outline:3px solid #d8b15f55;border-color:#9a3412}
     button{width:100%;border:0;border-radius:9px;padding:13px 16px;margin-top:20px;background:var(--primary);color:#fff;font:inherit;font-weight:750;cursor:pointer}button:hover{background:var(--primary-2)}button:disabled{opacity:.6;cursor:wait}.linkbtn{display:block;width:auto;margin:16px auto 0;padding:4px;background:none;color:var(--primary);font-size:.9rem;text-decoration:underline;font-weight:650}.linkbtn:hover{background:none;color:#9a3412}
-    #message{display:none;margin-top:16px;padding:12px;border-radius:8px;font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}#message.error{display:block;background:#fdecea;color:var(--error)}#message.success{display:block;background:#e5f4ea;color:var(--success)}.hint{font-size:.8rem;line-height:1.5;color:var(--muted);margin-top:20px}.register{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);text-align:center}.register p{margin:0 0 10px;color:var(--muted);font-size:.9rem}.register-btn{display:inline-block;background:var(--accent);color:var(--primary);text-decoration:none;font-weight:700;padding:11px 18px;border-radius:9px}.register-btn:hover{background:#ea580c}.footer{text-align:center;padding:20px 24px 28px;color:var(--muted);font-size:.8rem}
+    #message{display:none;margin-top:16px;padding:12px;border-radius:8px;font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}#message.error{display:block;background:#fdecea;color:var(--error)}#message.success{display:block;background:#e5f4ea;color:var(--success)}.hint{font-size:.8rem;line-height:1.5;color:var(--muted);margin-top:20px}.register{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);text-align:center}.register p{margin:0 0 10px;color:var(--muted);font-size:.9rem}.register-btn{display:inline-block;background:var(--accent);color:var(--primary);text-decoration:none;font-weight:700;padding:11px 18px;border-radius:9px}.register-btn:hover{background:#ea580c}.guest-btn{display:inline-block;background:var(--white);color:var(--primary);border:2px solid var(--primary);text-decoration:none;font-weight:700;padding:10px 18px;border-radius:9px}.guest-btn:hover{background:#eef4ff}.footer{text-align:center;padding:20px 24px 28px;color:var(--muted);font-size:.8rem}
     @media(max-width:760px){main{grid-template-columns:1fr;gap:28px;padding-top:36px}.intro h1{font-size:2.6rem}.intro p{font-size:1rem}.card{padding:24px}}
   </style>
 <link rel="stylesheet" href="css/site.css">
@@ -37,6 +37,11 @@
       <div class="register">
         <p>New student?</p>
         <a class="register-btn" href="register.html">Create an account</a>
+      </div>
+      <div class="register">
+        <p>Just want to practise? No account needed.</p>
+        <a class="guest-btn" href="tests.html">Continue as guest</a>
+        <p class="hint">Guests choose a nickname instead of signing in. Scores are not added to “My results”.</p>
       </div>
     </section>
   </main>
