@@ -248,7 +248,8 @@ a.brand { color: inherit; text-decoration: none; }
       'sb_publishable_W1BJsbUOZdR0dm5Ai_yHJg_J64HYtPH'
     );
     const { data } = await sb.auth.getSession();
-    if (!data.session) return 'You are not signed in, so the recordings were not saved.';
+    // Recordings are stored in a private bucket, so only signed-in students can save them.
+    if (!data.session) return 'Speaking recordings can only be saved to an account. Sign in to save them.';
     const uid = data.session.user.id;
 
     const uploaded = [];
