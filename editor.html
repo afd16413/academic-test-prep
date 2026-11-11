@@ -600,16 +600,9 @@ async function publishTest() {
   const series = (doc.series || "").trim();
   if (!series) { alert("Enter a series name in Test details first (for example Academic Test 17)."); return; }
   const id = editingId || (slugify(doc.title) + "-" + Date.now().toString(36));
-  // A writing set can hold Task 1 and Task 2; each one is published as its own test.
-  let source = doc;
-  let label = (doc.label || "").trim() || doc.title;
-  if (!editingId && (doc.type || "reading") === "writing" && doc.parts.length > 1) {
-    const choice = Number(prompt(`Which task do you want to publish? Enter ${doc.parts.map((_, i) => i + 1).join(" or ")}.`));
-    if (!doc.parts[choice - 1]) return; // cancelled or not a task number
-    source = { ...doc, title: `${doc.title} – Task ${choice}`, parts: [doc.parts[choice - 1]] };
-    label = `${label} – Task ${choice}`;
-  }
-  const { html, test, errors } = buildTestPage(source, id);
+  const label = (doc.label || "").trim() || doc.title;
+  // A writing set (Task 1 and Task 2) is published as one test; the page shows each task as a tab.
+  const { html, test, errors } = buildTestPage(doc, id);
   if (errors.length) { refreshStatus(); alert("Fix the problems listed on the page before publishing."); return; }
   const row = { title: test.title, minutes: test.time, kind: test.type, series, label, html };
   const { error } = editingId

@@ -1,0 +1,35 @@
+{
+  "editor": {
+    "title": "Academic Writing Test 2 (Cambridge IELTS 17)",
+    "series": "Academic Test 17",
+    "label": "Test 2 Writing",
+    "type": "writing",
+    "time": 60,
+    "labels": false,
+    "parts": [
+      {
+        "passageTitle": "Writing Task 1",
+        "instruction": "You should spend about 20 minutes on this task. Write at least 150 words.",
+        "instruction2": "",
+        "paragraphs": [
+          "The charts below show the police budget for one area of Britain in 2017 and 2018. The table shows where the police budget came from in 2017 and 2018. The pie charts show how the budget was spent in each year.",
+          "Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+        ],
+        "imageUrl": "",
+        "minWords": 150
+      },
+      {
+        "passageTitle": "Writing Task 2",
+        "instruction": "You should spend about 40 minutes on this task. Write at least 250 words.",
+        "instruction2": "",
+        "paragraphs": [
+          "Some children spend hours every day on their smartphones.",
+          "Why does this happen? Is this a positive or negative development?",
+          "Give reasons for your answer and include any relevant examples from your own knowledge or experience."
+        ],
+        "imageUrl": "",
+        "minWords": 250
+      }
+    ]
+  }
+}
