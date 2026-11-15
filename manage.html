@@ -3,38 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Manage tests | IELTS Academic Reading</title>
+<title>Manage tests | IELTS Academic Practice</title>
 <style>
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:960px;margin:auto;padding:40px 24px}
-h1,h2{color:var(--primary)}
-h1{margin:0 0 6px}
-p{line-height:1.6;color:var(--muted)}
-#status{overflow-wrap:anywhere}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:20px}
-.move{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.move input{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line-2);border-radius:8px;font:inherit;background:var(--surface);color:var(--text)}
-.move button{border:0;border-radius:8px;background:var(--primary);color:#fff;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
-.move button.secondary{background:var(--surface);color:var(--primary);border:1px solid var(--line-2)}
-.move button:disabled{opacity:.6}
-#count{margin-top:10px;font-size:.9rem}
-.divider{border:0;border-top:1px solid var(--line);margin:18px 0}
-.group{margin-top:26px}
-.group h2{margin:0 0 8px;padding-bottom:4px;border-bottom:2px solid var(--accent);font-size:1.2rem}
-.empty,.group p{color:var(--muted)}
-.add-link{display:inline-block;margin-left:10px;padding:5px 10px;border-radius:6px;background:var(--accent);color:var(--primary);font-size:.85rem;font-weight:700;text-decoration:none;vertical-align:middle}
-.remove-link{margin-left:8px;padding:5px 10px;border:1px solid var(--danger);border-radius:6px;background:var(--surface);color:var(--danger);font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;vertical-align:middle}
-.empty{font-size:.95rem;margin:8px 0 0}
-.subgroup{margin:18px 0 0;padding-left:12px;border-left:3px solid var(--line)}
-.subgroup h3{margin:0;color:var(--text);font-size:1rem}
-.subgroup .empty{color:var(--muted)}
-.test{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-top:8px;cursor:pointer}
-.test input{width:18px;height:18px;flex:0 0 auto}
-.test strong{display:block;color:var(--primary)}
-.test small{color:var(--muted)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:110px}
+main{max-width:960px;margin:auto;padding:32px 24px}
+h1,h2,h3{color:var(--primary)}
+h1{margin:0 0 6px;font-size:1.8rem}
+h2{margin:0;font-size:1.15rem}
+h3{margin:0;font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+p{line-height:1.6;color:var(--muted);margin:0}
+button{font:inherit;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+
+/* Messages */
+#status{margin-top:4px}
+#notice{margin-top:14px;padding:10px 14px;border-radius:0;font-size:.95rem;background:var(--success-bg);color:var(--success);border:1px solid transparent}
+#notice.err{background:var(--danger-bg);color:var(--danger)}
+#notice:empty{display:none}
+
+/* Summary and create group */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:0;padding:20px;margin-top:20px}
+.summary{display:flex;gap:10px;flex-wrap:wrap;margin:0}
+.summary span{background:var(--primary-soft);color:var(--primary);border-radius:0;padding:5px 12px;font-size:.9rem;font-weight:700}
+.howto{margin:12px 0 0;padding-left:20px;color:var(--muted);line-height:1.7}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row input{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line-2);border-radius:0;font:inherit;background:var(--surface);color:var(--text)}
+.btn{border:0;border-radius:0;background:var(--primary);color:#fff;padding:10px 16px;font-weight:700}
+.btn.ghost{background:var(--surface);color:var(--primary);border:1px solid var(--line-2)}
+.btn.danger-ghost{background:var(--surface);color:var(--danger);border:1px solid var(--danger)}
+.btn.sm{padding:6px 11px;font-size:.85rem}
+.btn.link{background:var(--accent);color:var(--primary);text-decoration:none;display:inline-block}
+
+/* Groups */
+.group{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:0;padding:18px}
+.group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+.group-head .count{color:var(--muted);font-size:.9rem}
+.group-head .actions{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.select-all{display:flex;gap:6px;align-items:center;font-size:.9rem;color:var(--muted);cursor:pointer}
+.select-all input,.test input{width:18px;height:18px;margin:0;flex:0 0 auto;cursor:pointer}
+.kind{margin-top:16px}
+.kind-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.empty{font-size:.95rem;padding:8px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:8px}
+.test{display:flex;flex-direction:column;justify-content:space-between;gap:6px;aspect-ratio:1/1;padding:10px;border:1px solid var(--line);border-radius:0;background:var(--surface);cursor:pointer;min-width:0}
+.test:hover{border-color:var(--line-2)}
+.test.selected{border-color:var(--primary);background:var(--primary-soft)}
+.test{cursor:grab}
+.test.dragging{opacity:.45}
+.group{transition:outline-color .1s}
+.group.drop-target{outline:2px dashed var(--primary);outline-offset:4px;background:var(--primary-soft)}
+.test .name{display:block;color:var(--text);font-weight:700;font-size:.9rem;line-height:1.3;overflow-wrap:anywhere}
+.test .meta{color:var(--muted);font-size:.88rem}
+.empty-all{margin-top:26px;padding:24px;text-align:center;border:1px dashed var(--line-2);border-radius:0;background:var(--surface)}
 .error{color:var(--danger)}
+
+/* Selection bar */
+#bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line-2);box-shadow:0 -4px 16px rgba(16,24,40,.12);padding:12px 24px;z-index:10}
+#bar .inner{max-width:960px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#bar .inner strong{color:var(--primary);margin-right:auto}
+#bar input{flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line-2);border-radius:0;font:inherit;background:var(--surface);color:var(--text)}
 </style>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/theme.js"></script>
@@ -45,29 +74,40 @@ p{line-height:1.6;color:var(--muted)}
 <main>
   <h1>Manage tests</h1>
   <p id="status">Checking your session…</p>
+  <div id="notice" role="status" aria-live="polite"></div>
 
   <section class="panel" id="panel" hidden>
-    <h2 style="margin-top:0">Move selected tests to a group</h2>
-    <p>Tick tests in the list below, then choose an existing group or type a new name.</p>
-    <div class="move">
-      <input id="groupInput" list="groupList" placeholder="Group name, e.g. Academic Test 17" aria-label="Group name">
-      <datalist id="groupList"></datalist>
-      <button id="moveBtn" type="button">Move selected</button>
-      <button id="ungroupBtn" class="secondary" type="button">Remove from group</button>
+    <div class="row" style="justify-content:space-between">
+      <p class="summary" id="summary"></p>
     </div>
-    <div id="count"></div>
+    <ol class="howto">
+      <li>Tick the tests you want to group. Use <em>Select all</em> to tick a whole group.</li>
+      <li>At the bottom of the screen, choose an existing group or type a new name, then click <em>Move to group</em>.</li>
+      <li>To create an empty group first, use the form below and add tests to it later.</li>
+    </ol>
 
-    <hr class="divider">
-    <h2>Create group</h2>
-    <p>A new group appears straight away, even before any test is in it. Its tests are added with the + Add test button.</p>
-    <div class="move">
-      <input id="newGroup" placeholder="New group name, e.g. Academic Test 18" aria-label="New group name">
-      <button id="createBtn" type="button">Create group</button>
+    <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+    <h2 style="margin-bottom:8px">Create a group</h2>
+    <div class="row">
+      <input id="newGroup" placeholder="e.g. Academic Test 18" aria-label="New group name">
+      <button id="createBtn" class="btn" type="button">Create group</button>
     </div>
   </section>
 
   <div id="list"></div>
 </main>
+
+<div id="bar" hidden>
+  <div class="inner">
+    <strong id="barCount">0 tests selected</strong>
+    <input id="groupInput" list="groupList" placeholder="Group name, e.g. Academic Test 17" aria-label="Group name">
+    <datalist id="groupList"></datalist>
+    <button id="moveBtn" class="btn" type="button">Move to group</button>
+    <button id="ungroupBtn" class="btn ghost" type="button">Remove from group</button>
+    <button id="clearBtn" class="btn ghost" type="button">Clear selection</button>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://yfsxbiqszvrqhsdcuwyr.supabase.co';
@@ -75,57 +115,120 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_W1BJsbUOZdR0dm5Ai_yHJg_J64HYtPH
 const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const UNGROUPED = 'Ungrouped';
-const KINDS = [['reading', 'Reading Tests'], ['listening', 'Listening Tests'], ['writing', 'Writing Tests'], ['speaking', 'Speaking Tests']];
+const KINDS = [['reading', 'Reading'], ['listening', 'Listening'], ['writing', 'Writing'], ['speaking', 'Speaking']];
+
+// Short messages shown above the list. Success messages fade after a few seconds; errors stay until the next action.
+let noticeTimer = null;
+function say(msg, kind) {
+  const n = $('notice');
+  n.textContent = msg;
+  n.className = kind === 'err' ? 'err' : '';
+  clearTimeout(noticeTimer);
+  if (kind !== 'err') noticeTimer = setTimeout(() => { n.textContent = ''; }, 4000);
+}
 
 if (!window.supabase) {
   $('status').textContent = 'Could not load the Supabase client library. Check your connection and refresh.';
 } else {
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-  let tests = [], groupNames = [];
+  let tests = [], groupNames = [], groups = [];
+  const selected = new Set();
+  let busy = false;
 
-  function selectedIds() {
-    return [...document.querySelectorAll('#list input[type=checkbox]:checked')].map(c => c.value);
+  function setBusy(b) {
+    busy = b;
+    ['moveBtn', 'ungroupBtn', 'clearBtn', 'createBtn'].forEach(id => { $(id).disabled = b; });
   }
 
-  function updateCount() {
-    const n = selectedIds().length;
-    $('count').textContent = n ? `${n} test${n === 1 ? '' : 's'} selected` : 'No tests selected';
+  // Builds the groups in display order: named groups first, then "Ungrouped" last.
+  function buildGroups() {
+    const map = new Map();
+    groupNames.forEach(name => map.set(name, []));
+    tests.forEach(t => {
+      const key = (t.series || '').trim() || UNGROUPED;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(t);
+    });
+    const names = [...map.keys()].filter(n => n !== UNGROUPED);
+    if (map.has(UNGROUPED)) names.push(UNGROUPED);
+    return names.map(name => ({ name, items: map.get(name) }));
+  }
+
+  function updateSummary() {
+    const ungrouped = tests.filter(t => !(t.series || '').trim()).length;
+    const named = groups.filter(g => g.name !== UNGROUPED).length;
+    $('summary').innerHTML =
+      `<span>${tests.length} test${tests.length === 1 ? '' : 's'}</span>` +
+      `<span>${named} group${named === 1 ? '' : 's'}</span>` +
+      `<span>${ungrouped} ungrouped</span>`;
+  }
+
+  // Keeps the header checkbox of each group in step with its tests.
+  function syncCheckboxes() {
+    document.querySelectorAll('#list .group').forEach(section => {
+      const boxes = [...section.querySelectorAll('input[data-id]')];
+      const all = section.querySelector('input[data-select-group]');
+      if (!all) return;
+      const checked = boxes.filter(b => b.checked).length;
+      all.checked = boxes.length > 0 && checked === boxes.length;
+      all.indeterminate = checked > 0 && checked < boxes.length;
+      all.disabled = boxes.length === 0;
+    });
+    document.querySelectorAll('#list .test').forEach(row => {
+      row.classList.toggle('selected', row.querySelector('input').checked);
+    });
+  }
+
+  function updateBar() {
+    const n = selected.size;
+    $('bar').hidden = n === 0;
+    $('barCount').textContent = `${n} test${n === 1 ? '' : 's'} selected`;
+    syncCheckboxes();
   }
 
   function render() {
-    // Every group in the table is shown, even when it is empty.
-    const groups = {};
-    groupNames.forEach(name => { groups[name] = []; });
-    tests.forEach(t => {
-      const key = (t.series || '').trim() || UNGROUPED;
-      (groups[key] = groups[key] || []).push(t);
-    });
-    const names = Object.keys(groups).filter(n => n !== UNGROUPED);
-    $('groupList').innerHTML = names.map(n => `<option value="${esc(n)}">`).join('');
+    groups = buildGroups();
+    $('groupList').innerHTML = groups.filter(g => g.name !== UNGROUPED).map(g => `<option value="${esc(g.name)}">`).join('');
+    updateSummary();
 
-    $('list').innerHTML = Object.entries(groups).map(([name, items]) => {
-      const addLink = name !== UNGROUPED
-        ? ` <a class="add-link" href="editor.html?series=${encodeURIComponent(name)}">+ Add test</a>` : '';
-      const removeBtn = name !== UNGROUPED
-        ? ` <button class="remove-link" type="button" data-remove="${esc(name)}">Remove group</button>` : '';
-      // Inside each group, the tests are sorted into sub groups by type: Reading Tests, Writing Tests, and so on.
+    if (!tests.length && !groupNames.length) {
+      $('list').innerHTML = '<div class="empty-all"><p>No tests yet. Publish one from the editor, then group it here.</p></div>';
+      updateBar();
+      return;
+    }
+
+    $('list').innerHTML = groups.map((g, gi) => {
+      const addLink = g.name !== UNGROUPED
+        ? `<a class="btn link sm" href="editor.html?series=${encodeURIComponent(g.name)}">+ Add test</a>` : '';
+      const removeBtn = g.name !== UNGROUPED
+        ? `<button class="btn danger-ghost sm" type="button" data-remove="${esc(g.name)}">Remove group</button>` : '';
+      const selectAll = g.items.length
+        ? `<label class="select-all"><input type="checkbox" data-select-group="${gi}"> Select all</label>` : '';
       const body = KINDS.map(([kind, title]) => {
-        const its = items.filter(t => (t.kind || 'reading') === kind);
-        const rows = its.length
-          ? its.map(t => `
-            <label class="test">
-              <input type="checkbox" value="${esc(t.id)}">
-              <span>
-                <strong>${esc(t.label || t.title)}</strong>
-                <small>${esc(t.minutes)} min</small>
-              </span>
-            </label>`).join('')
-          : '<p class="empty">No tests yet.</p>';
-        return `<div class="subgroup"><h3>${title}</h3>${rows}</div>`;
+        const its = g.items.filter(t => (t.kind || 'reading') === kind);
+        if (!its.length) return '';
+        const rows = its.map(t => `
+          <label class="test" draggable="true" data-drag="${esc(t.id)}">
+            <input type="checkbox" value="${esc(t.id)}" data-id="${esc(t.id)}" ${selected.has(t.id) ? 'checked' : ''}>
+            <span>
+              <span class="name">${esc(t.label || t.title)}</span>
+              <span class="meta">${esc(t.minutes)} min</span>
+            </span>
+          </label>`).join('');
+        return `<div class="kind"><div class="kind-title"><h3>${title}</h3></div><div class="tiles">${rows}</div></div>`;
       }).join('');
-      return `<section class="group"><h2>${esc(name)}${addLink}${removeBtn}</h2>${body}</section>`;
-    }).join('') || '<p>No tests yet.</p>';
-    updateCount();
+      const empty = g.items.length ? '' : `<p class="empty">No tests in this group yet.</p>`;
+      return `
+        <section class="group" data-group="${esc(g.name)}">
+          <div class="group-head">
+            <h2>${esc(g.name)}</h2>
+            <span class="count">${g.items.length} test${g.items.length === 1 ? '' : 's'}</span>
+            <div class="actions">${selectAll}${addLink}${removeBtn}</div>
+          </div>
+          ${body}${empty}
+        </section>`;
+    }).join('');
+    updateBar();
   }
 
   async function load() {
@@ -139,34 +242,64 @@ if (!window.supabase) {
     // Groups that tests already use are included too, in case they were never listed.
     const used = tests.map(x => (x.series || '').trim()).filter(Boolean);
     groupNames = [...new Set([...g.data.map(x => x.name), ...used])].filter(n => n !== UNGROUPED).sort();
+    // Keep only selections that still exist, so ticks survive a refresh.
+    const ids = new Set(tests.map(x => x.id));
+    [...selected].forEach(id => { if (!ids.has(id)) selected.delete(id); });
     render();
   }
 
-  // Sets the group of the selected tests. An empty group removes them from their group.
-  async function moveSelected(group) {
-    const ids = selectedIds();
-    if (!ids.length) { alert('Tick at least one test first.'); return; }
-    if (group) await ensureGroup(group);
-    const { error } = await client.from('tests').update({ series: group }).in('id', ids);
-    if (error) { alert('Could not move the tests: ' + error.message); return; }
-    await load();
+  // Moves the given tests into a group. An empty group (null) makes them ungrouped.
+  async function moveIds(idList, group) {
+    const current = new Map(tests.map(t => [t.id, (t.series || '').trim() || null]));
+    const ids = idList.filter(id => current.get(id) !== (group || null));
+    if (!ids.length) { say(`Already in "${group || UNGROUPED}".`); return; }
+    setBusy(true);
+    try {
+      if (group) await ensureGroup(group);
+      const { error } = await client.from('tests').update({ series: group }).in('id', ids);
+      if (error) throw error;
+      ids.forEach(id => selected.delete(id));
+      $('groupInput').value = '';
+      say(group
+        ? `Moved ${ids.length} test${ids.length === 1 ? '' : 's'} to "${group}".`
+        : `Removed ${ids.length} test${ids.length === 1 ? '' : 's'} from their group.`);
+      await load();
+    } catch (err) {
+      say('Could not move the tests: ' + (err.message || err), 'err');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // Moves the ticked tests (used by the bar at the bottom).
+  function moveSelected(group) {
+    if (!selected.size) { say('Tick at least one test first.', 'err'); return; }
+    return moveIds([...selected], group);
   }
 
   async function ensureGroup(name) {
     if (groupNames.includes(name)) return;
     const { error } = await client.from('test_groups').insert({ name });
-    if (error && !/duplicate/i.test(error.message)) alert('Could not create the group: ' + error.message);
+    if (error && !/duplicate/i.test(error.message)) throw error;
   }
 
   async function createGroup() {
     const name = $('newGroup').value.trim();
-    if (!name) { alert('Type a name for the new group first.'); return; }
-    if (name === UNGROUPED) { alert('"Ungrouped" is reserved. Choose another name.'); return; }
-    if (groupNames.includes(name)) { alert('A group with this name already exists.'); return; }
-    const { error } = await client.from('test_groups').insert({ name });
-    if (error) { alert('Could not create the group: ' + error.message); return; }
-    $('newGroup').value = '';
-    await load();
+    if (!name) { say('Type a name for the new group first.', 'err'); return; }
+    if (name === UNGROUPED) { say('"Ungrouped" is reserved. Choose another name.', 'err'); return; }
+    if (groupNames.includes(name)) { say('A group with this name already exists.', 'err'); return; }
+    setBusy(true);
+    try {
+      const { error } = await client.from('test_groups').insert({ name });
+      if (error) throw error;
+      $('newGroup').value = '';
+      say(`Created the group "${name}". Tick tests below and move them into it.`);
+      await load();
+    } catch (err) {
+      say('Could not create the group: ' + (err.message || err), 'err');
+    } finally {
+      setBusy(false);
+    }
   }
 
   // Removing a group does not delete its tests: they become ungrouped.
@@ -174,13 +307,21 @@ if (!window.supabase) {
     const count = tests.filter(t => (t.series || '').trim() === name).length;
     const note = count ? ` Its ${count} test${count === 1 ? '' : 's'} will become ungrouped (they are not deleted).` : '';
     if (!confirm(`Remove the group "${name}"?${note}`)) return;
-    if (count) {
-      const { error } = await client.from('tests').update({ series: null }).eq('series', name);
-      if (error) { alert('Could not update the tests: ' + error.message); return; }
+    setBusy(true);
+    try {
+      if (count) {
+        const { error } = await client.from('tests').update({ series: null }).eq('series', name);
+        if (error) throw error;
+      }
+      const { error } = await client.from('test_groups').delete().eq('name', name);
+      if (error) throw error;
+      say(`Removed the group "${name}".`);
+      await load();
+    } catch (err) {
+      say('Could not remove the group: ' + (err.message || err), 'err');
+    } finally {
+      setBusy(false);
     }
-    const { error } = await client.from('test_groups').delete().eq('name', name);
-    if (error) { alert('Could not remove the group: ' + error.message); return; }
-    await load();
   }
 
   async function init() {
@@ -196,24 +337,78 @@ if (!window.supabase) {
 
     $('moveBtn').addEventListener('click', () => {
       const group = $('groupInput').value.trim();
-      if (!group) { alert('Type or choose a group name first.'); return; }
+      if (!group) { say('Type or choose a group name first.', 'err'); return; }
       moveSelected(group);
     });
     $('ungroupBtn').addEventListener('click', () => {
+      if (!selected.size) { say('Tick at least one test first.', 'err'); return; }
       if (confirm('Remove the selected tests from their group?')) moveSelected(null);
     });
+    $('clearBtn').addEventListener('click', () => { selected.clear(); render(); });
     $('createBtn').addEventListener('click', createGroup);
-    $('list').addEventListener('change', updateCount);
+    $('newGroup').addEventListener('keydown', e => { if (e.key === 'Enter') createGroup(); });
+    $('groupInput').addEventListener('keydown', e => { if (e.key === 'Enter') $('moveBtn').click(); });
+
+    // Ticking a test or a group's "Select all" box updates the selection.
+    $('list').addEventListener('change', e => {
+      const t = e.target;
+      if (t.matches('input[data-id]')) {
+        if (t.checked) selected.add(t.dataset.id); else selected.delete(t.dataset.id);
+        updateBar();
+      } else if (t.matches('input[data-select-group]')) {
+        const section = t.closest('.group');
+        section.querySelectorAll('input[data-id]').forEach(b => {
+          b.checked = t.checked;
+          if (t.checked) selected.add(b.dataset.id); else selected.delete(b.dataset.id);
+        });
+        updateBar();
+      }
+    });
+    // Drag and drop: drag a test onto a group to move it. If the dragged test is ticked, all ticked tests move.
+    let dragIds = [];
+    $('list').addEventListener('dragstart', e => {
+      const row = e.target.closest('.test');
+      if (!row || busy) { e.preventDefault(); return; }
+      const id = row.dataset.drag;
+      dragIds = selected.has(id) ? [...selected] : [id];
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', id);
+      document.querySelectorAll('.test').forEach(r => { if (dragIds.includes(r.dataset.drag)) r.classList.add('dragging'); });
+    });
+    $('list').addEventListener('dragend', () => {
+      dragIds = [];
+      document.querySelectorAll('.dragging, .drop-target').forEach(el => el.classList.remove('dragging', 'drop-target'));
+    });
+    $('list').addEventListener('dragover', e => {
+      const section = e.target.closest('.group');
+      if (!section || !dragIds.length) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      section.classList.add('drop-target');
+    });
+    $('list').addEventListener('dragleave', e => {
+      const section = e.target.closest('.group');
+      if (section && !section.contains(e.relatedTarget)) section.classList.remove('drop-target');
+    });
+    $('list').addEventListener('drop', e => {
+      const section = e.target.closest('.group');
+      if (!section || !dragIds.length) return;
+      e.preventDefault();
+      section.classList.remove('drop-target');
+      const target = section.dataset.group === UNGROUPED ? null : section.dataset.group;
+      const ids = dragIds;
+      dragIds = [];
+      moveIds(ids, target);
+    });
     $('list').addEventListener('click', e => {
       const btn = e.target.closest('[data-remove]');
-      if (btn) removeGroup(btn.dataset.remove);
+      if (btn && !busy) removeGroup(btn.dataset.remove);
     });
 
     await load();
   }
 
   init().catch(err => { $('status').textContent = 'Something went wrong: ' + (err.message || err); });
-
 }
 </script>
 </body>

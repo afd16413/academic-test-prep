@@ -17,7 +17,7 @@
     '<div class="topbar">' +
       '<a class="brand" href="index.html">IELTS <span>ACADEMIC</span> PRACTICE</a>' +
       '<nav class="navlinks" aria-label="Main">' +
-        link("tests.html", "Practice") +
+        '<a id="navPractice" href="tests.html"' + (here === "tests.html" ? ' aria-current="page"' : "") + ">Practice</a>" +
         '<a id="navResults" href="results.html"' + (here === "results.html" ? ' aria-current="page"' : "") + ' hidden>My results</a>' +
         '<a id="navAdmin" href="admin.html" hidden>Admin panel</a>' +
         link("contact.html", "Contact") +
@@ -43,9 +43,17 @@
         await client.auth.signOut();
         window.location.replace("index.html");
       });
-      document.getElementById("navResults").hidden = false;
       client.from("admins").select("user_id").eq("user_id", session.user.id).maybeSingle()
-        .then(function (r) { if (r.data) document.getElementById("navAdmin").hidden = false; });
+        .then(function (r) {
+          if (r.data) {
+            // Admins get the admin panel instead of the student links.
+            document.getElementById("navAdmin").hidden = false;
+            document.getElementById("navPractice").hidden = true;
+            document.getElementById("navResults").hidden = true;
+          } else {
+            document.getElementById("navResults").hidden = false;
+          }
+        });
     }).catch(function () {});
   });
 })();

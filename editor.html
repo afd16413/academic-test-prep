@@ -179,6 +179,9 @@ let editingId = null;
 // Opened from a group on the Manage tests page: put the new test into that group.
 const presetSeries = new URLSearchParams(window.location.search).get("series");
 if (presetSeries) { doc.series = presetSeries; saveDraft(); }
+// Opened from a skill section on the Tests page (&type=reading etc.): the test type is set too.
+const presetType = new URLSearchParams(window.location.search).get("type");
+if (["reading", "listening", "writing", "speaking"].includes(presetType)) { doc.type = presetType; saveDraft(); }
 
 function loadDraft() {
   try {
@@ -283,7 +286,7 @@ function edPassage(p, pi, compiled) {
       <button class="btn danger sm" data-act="del-para" data-p="${pi}" data-i="${i}">Remove</button>
     </div>`).join("");
 
-  const groups = p.groups.map((g, gi) =>
+  const groups = (p.groups || []).map((g, gi) =>
     edGroup(g, pi, gi, compiled && compiled.groups[gi] ? compiled.groups[gi].range : "")).join("");
 
   return `<section class="card">
