@@ -1,0 +1,58 @@
+{
+  "editor": {
+    "title": "Academic Speaking Test 3 (Cambridge IELTS 17)",
+    "series": "Academic Test 17",
+    "label": "Test 3 Speaking",
+    "type": "speaking",
+    "time": 14,
+    "labels": false,
+    "parts": [
+      {
+        "passageTitle": "Part 1: Introduction and interview",
+        "instruction": "The examiner asks you about yourself, your home, work or studies and other familiar topics.",
+        "instruction2": "",
+        "paragraphs": [
+          "Question 1: What do you like to drink with your dinner? [Why?]",
+          "Question 2: Do you drink a lot of water every day? [Why/Why not?]",
+          "Question 3: Do you prefer drinking tea or coffee? [Why?]",
+          "Question 4: If people visit you in your home, what do you usually offer them to drink? [Why/Why not?]"
+        ],
+        "imageUrl": "",
+        "minWords": 0,
+        "groups": []
+      },
+      {
+        "passageTitle": "Part 2: Long turn",
+        "instruction": "Describe a monument (e.g., a statue or sculpture) that you like.",
+        "instruction2": "",
+        "paragraphs": [
+          "You should say:",
+          "what this monument is",
+          "where this monument is",
+          "what it looks like",
+          "and explain why you like this monument.",
+          "You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish."
+        ],
+        "imageUrl": "",
+        "minWords": 0,
+        "groups": []
+      },
+      {
+        "passageTitle": "Part 3: Discussion",
+        "instruction": "The examiner asks further questions related to the Part 2 topic.",
+        "instruction2": "",
+        "paragraphs": [
+          "Question 6: What kinds of monuments do tourists in your country enjoy visiting?",
+          "Question 7: Why do you think there are often statues of famous people in public places?",
+          "Question 8: Do you agree that old monuments and buildings should always be preserved?",
+          "Question 9: Why is architecture such a popular university subject?",
+          "Question 10: In what ways has the design of homes changed in recent years?",
+          "Question 11: To what extent does the design of buildings affect people’s moods?"
+        ],
+        "imageUrl": "",
+        "minWords": 0,
+        "groups": []
+      }
+    ]
+  }
+}

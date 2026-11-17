@@ -90,9 +90,6 @@ select { padding: 6px 8px; font-size: 14px; border: 1px solid var(--line-2); bor
 
 <div class="toolbar">
   <div class="container">
-    <a class="btn outline sm" href="index.html" style="text-decoration:none">Home</a>
-    <button class="btn outline sm" data-act="new">New test</button>
-    <button class="btn outline sm" data-act="example">Load example</button>
     <label class="btn outline sm" style="cursor:pointer">Open test file
       <input type="file" id="openFile" accept=".html,.js,.json,application/json" hidden>
     </label>
@@ -100,7 +97,6 @@ select { padding: 6px 8px; font-size: 14px; border: 1px solid var(--line-2); bor
     <span id="status" class="status"></span>
     <button class="btn outline sm" data-act="preview">Preview</button>
     <button class="btn sm" data-act="publish">Publish to site</button>
-    <button class="btn sm" data-act="save">Save test file</button>
   </div>
 </div>
 
@@ -205,7 +201,6 @@ function blankItem(type) {
 }
 function blankGroup(type) { return { type, heading: "", instruction: "", box: "", lines: [], items: [], options: [] }; }
 function blankPassage() { return { passageTitle: "", instruction: "", paragraphs: [""], groups: [] }; }
-function blankDoc() { return { title: "New test", series: "Academic Test 17", label: "", type: "reading", time: 20, labels: true, parts: [blankPassage()] }; }
 
 function refreshStatus() {
   const { errors, count } = compile(doc);
@@ -271,7 +266,10 @@ function edPassage(p, pi, compiled) {
     <h4>Audio</h4>
     ${p.audioUrl ? `<div class="row"><audio controls preload="metadata" src="${esc(p.audioUrl)}" style="flex:1"></audio>
       <button class="btn danger sm" data-act="del-audio" data-p="${pi}">Remove audio</button></div>` : ""}
-    <input type="file" accept="audio/*" data-k="audio" data-p="${pi}">`;
+    <input type="file" accept="audio/*" data-k="audio" data-p="${pi}">
+    <label class="lbl">Or use an audio link (a direct https:// link to the audio file)</label>
+    <input class="field" data-k="audiolink" data-p="${pi}" value="${esc(p.audioUrl || "")}" placeholder="https://example.com/section-1.mp3">
+    <p class="hint">Upload a file above or paste a link here. Remove the audio to change it.</p>`;
   const imageBlock = type !== "writing" ? "" : `
     <h4>Image (Task 1 chart, graph or diagram, optional)</h4>
     ${p.imageUrl ? `<div class="row"><img src="${esc(p.imageUrl)}" alt="" style="max-width:260px;border-radius:6px">
@@ -505,6 +503,15 @@ function handleField(t) {
     case "type": doc.type = t.value; rerender = true; break;
     case "series": doc.series = t.value; break;
     case "label": doc.label = t.value; break;
+    case "audiolink": {
+      // Typing keeps focus on the field; the preview updates once the field loses focus.
+      const v = t.value.trim();
+      if (!v) { delete doc.parts[p].audioUrl; }
+      else if (/^https:\/\/\S+$/i.test(v)) { doc.parts[p].audioUrl = v; }
+      else { $("status").textContent = "The audio link must start with https://"; return; }
+      rerender = document.activeElement !== t;
+      break;
+    }
     case "minwords": doc.parts[p].minWords = Math.max(0, Number(t.value) || 0); break;
     case "ptitle": doc.parts[p].passageTitle = t.value; break;
     case "pinstr": doc.parts[p].instruction = t.value; break;
@@ -656,18 +663,6 @@ function handleAction(act, el) {
   const item = () => group().items[i];
 
   switch (act) {
-    case "new":
-      if (!confirm("Start a blank test? The current test will be replaced.")) return;
-      doc = blankDoc();
-      activePart = 0;
-      setEditing(null);
-      break;
-    case "example":
-      if (!confirm("Load the example? The current test will be replaced.")) return;
-      doc = clone(EXAMPLE);
-      activePart = 0;
-      setEditing(null);
-      break;
     case "set-part": activePart = p; break;
     case "preview": {
       const { html, errors } = buildTestPage(doc);
@@ -677,19 +672,6 @@ function handleAction(act, el) {
       const url = URL.createObjectURL(new Blob([page], { type: "text/html" }));
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 60000);
-      return;
-    }
-    case "save": {
-      const { html, test, errors } = buildTestPage(doc);
-      if (errors.length) { refreshStatus(); alert("Fix the problems listed on the page before saving."); return; }
-      const name = slugify(test.title) + ".html";
-      const url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = name;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      alert(`Saved ${name}.\n\nDouble-click it to open the test. It does not need this editor or any other file.`);
       return;
     }
     case "del-audio": delete part().audioUrl; break;

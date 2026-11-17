@@ -24,9 +24,9 @@ p{line-height:1.6;color:var(--muted)}
 .test{display:flex;flex-direction:column;justify-content:space-between;gap:8px;aspect-ratio:1/1;min-width:0;border:1px solid var(--line);border-radius:0;padding:10px;background:var(--surface)}
 .test h3{margin:0;color:var(--primary);font-size:.9rem;line-height:1.3;overflow-wrap:anywhere}
 .test small{color:var(--muted)}
-.test .actions{display:flex;gap:6px;flex-wrap:wrap}
+.test .actions{display:flex;flex-direction:column;gap:6px}
+.test .actions>*{width:100%;text-align:center;box-sizing:border-box}
 .test a,.test button{background:var(--primary);color:#fff;text-decoration:none;font-weight:700;padding:6px 10px;border-radius:0;border:0;font:inherit;font-size:.85rem;cursor:pointer}
-.test button.danger{background:#b42318}
 .test{border-color:var(--line)}
 .subgroup{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .subgroup h3.group-title{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 8px;padding-bottom:4px;border-bottom:2px solid var(--accent);color:var(--primary);font-size:1.1rem;text-transform:none;letter-spacing:0}
@@ -43,6 +43,7 @@ p{line-height:1.6;color:var(--muted)}
   <p id="status">Checking your session…</p>
 
   <div id="testList"></div>
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -72,7 +73,7 @@ if (!window.supabase) {
         </div>
         <div class="actions">
           <button type="button" data-open="${esc(t.id)}">Start test</button>
-          ${isAdmin ? `<button type="button" class="danger" data-delete="${esc(t.id)}">Delete</button>` : ''}
+          ${isAdmin ? `<a class="edit-link" href="editor.html?edit=${encodeURIComponent(t.id)}">Edit test</a>` : ''}
         </div>
       </div>`;
   }
@@ -127,13 +128,6 @@ if (!window.supabase) {
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
-  async function deleteTest(id, isAdmin) {
-    if (!confirm('Delete this test? Students will no longer see it.')) return;
-    const { error } = await client.from('tests').delete().eq('id', id);
-    if (error) { alert('Could not delete the test: ' + error.message); return; }
-    loadTests(isAdmin);
-  }
-
   async function init() {
     if (SKILL_MODE) {
       $('pageTitle').textContent = SKILL_NAMES[SKILL] + ' tests';
@@ -156,9 +150,7 @@ if (!window.supabase) {
 
     $('testList').addEventListener('click', e => {
       const open = e.target.closest('[data-open]');
-      const del = e.target.closest('[data-delete]');
       if (open) openTest(open.dataset.open);
-      if (del) deleteTest(del.dataset.delete, isAdmin);
     });
   }
 

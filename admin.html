@@ -25,16 +25,14 @@ p{line-height:1.6;color:var(--muted)}
 .card h2{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
 .card p{margin:0;font-size:.95rem}
 .denied{margin-top:24px;color:var(--muted)}
-.editpanel{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
-.editpanel h2{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
-.editpanel ul{list-style:none;margin:16px 0 0;padding:0}
-.editpanel li{padding:10px 0;border-top:1px solid var(--line);display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
-.editpanel li a{color:var(--primary);font-weight:700;text-decoration:none}
-.editpanel li a:hover{color:#9a3412;text-decoration:underline}
-.editpanel li span{color:var(--muted);font-size:.9rem}
-.editpanel h3{margin:22px 0 2px;color:var(--primary);font-size:1.15rem}
-.editpanel h4{margin:12px 0 0;color:var(--muted);font-size:.95rem}
-.editpanel ul{list-style:none;margin:0;padding:0}
+.deletepanel{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.deletepanel h2{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+.deletepanel h3{margin:22px 0 2px;color:var(--primary);font-size:1.15rem}
+.deletepanel h4{margin:12px 0 0;color:var(--muted);font-size:.95rem}
+.deletepanel ul{list-style:none;margin:0;padding:0}
+.deletepanel li{padding:10px 0;border-top:1px solid var(--line);display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.deletepanel li span{color:var(--muted);font-size:.9rem}
+.danger-btn{background:#b42318;color:#fff;border:0;border-radius:6px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
 </style>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/theme.js"></script>
@@ -47,9 +45,9 @@ p{line-height:1.6;color:var(--muted)}
   <p id="status">Checking your session…</p>
 
   <section class="cards" id="cards" hidden>
-    <a class="card" href="editor.html">
-      <h2>Add new test</h2>
-      <p>Build a reading, listening, writing or speaking test and publish it.</p>
+    <a class="card" href="tests.html">
+      <h2>Tests</h2>
+      <p>See the tests as students see them, and edit them.</p>
     </a>
     <label class="card" style="cursor:pointer">
       <h2>Upload test file</h2>
@@ -64,16 +62,21 @@ p{line-height:1.6;color:var(--muted)}
       <h2>Review answers</h2>
       <p>Read student answers, add comments and give writing and speaking bands.</p>
     </a>
-    <a class="card" href="tests.html">
-      <h2>Tests</h2>
-      <p>See the tests as students see them.</p>
+    <div class="card">
+      <h2>Update all tests</h2>
+      <p>Rebuild every published test with the current page design. Questions, answers and audio stay the same.</p>
+      <button type="button" id="refreshAll" style="margin-top:12px;background:#1d4ed8;color:#fff;border:0;border-radius:8px;padding:9px 14px;font:inherit;font-weight:700;cursor:pointer">Update all tests</button>
+    </div>
+    <a class="card" href="editor.html">
+      <h2>Add new test</h2>
+      <p>Build a reading, listening, writing or speaking test and publish it.</p>
     </a>
   </section>
 
-  <section class="editpanel" id="editPanel" hidden>
-    <h2>Edit a published test</h2>
-    <p>Open a test in the editor, change it and publish the changes. Students see the update on the site.</p>
-    <div id="editList"><p>Loading tests…</p></div>
+  <section class="deletepanel" id="deletePanel" hidden>
+    <h2>Delete a published test</h2>
+    <p>Students will no longer see a deleted test. This cannot be undone.</p>
+    <div id="deleteList"><p>Loading tests…</p></div>
   </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -94,24 +97,23 @@ if (!window.supabase) {
     if (!admin) { window.location.replace('tests.html'); return; }
     document.getElementById('status').textContent = 'Signed in as ' + session.session.user.email + '.';
     document.getElementById('cards').hidden = false;
-    document.getElementById('editPanel').hidden = false;
-    loadEditList();
+    document.getElementById('deletePanel').hidden = false;
+    loadDeleteList();
   }
 
   init().catch(err => { document.getElementById('status').textContent = 'Something went wrong: ' + (err.message || err); });
 
 
-  // Lists every published test so an admin can open it in the editor and republish changes.
-  // Tests are grouped by skill (Reading, Listening, Writing, Speaking), then by group (series), in test order.
-  async function loadEditList() {
-    const list = document.getElementById('editList');
+  // Lists every published test with a Delete button, grouped by skill.
+  async function loadDeleteList() {
+    const list = document.getElementById('deleteList');
     const { data, error } = await client.from('tests').select('id,title,series,label,kind').order('created_at', { ascending: true });
     if (error) { list.textContent = 'Could not load tests: ' + error.message; return; }
     if (!data.length) { list.innerHTML = '<p>No published tests yet.</p>'; return; }
     const esc = v => String(v || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const SKILLS = [['reading', 'Reading tests'], ['listening', 'Listening tests'], ['writing', 'Writing tests'], ['speaking', 'Speaking tests']];
     const UNGROUPED = 'Other tests';
-    const row = t => `<li><a href="editor.html?edit=${encodeURIComponent(t.id)}">${esc(t.title)}</a><span>${esc(t.label || '')}</span></li>`;
+    const row = t => `<li><span>${esc(t.title)}${t.label ? ' · ' + esc(t.label) : ''}</span><button type="button" class="danger-btn" data-delete="${esc(t.id)}">Delete</button></li>`;
     list.innerHTML = SKILLS.map(([kind, heading]) => {
       const items = data.filter(t => (t.kind || 'reading') === kind);
       if (!items.length) return '';
@@ -129,6 +131,16 @@ if (!window.supabase) {
       return `<h3>${heading}</h3>${body}`;
     }).join('');
   }
+
+  document.getElementById('deleteList').addEventListener('click', async e => {
+    const btn = e.target.closest('[data-delete]');
+    if (!btn) return;
+    const title = btn.closest('li').querySelector('span').textContent;
+    if (!confirm(`Delete "${title}"? Students will no longer see it.`)) return;
+    const { error } = await client.from('tests').delete().eq('id', btn.dataset.delete);
+    if (error) { alert('Could not delete the test: ' + error.message); return; }
+    loadDeleteList();
+  });
 
   // Publishes a test from a JSON file (the editor's test file) or a saved .html test page.
   async function uploadTestFile(input) {
@@ -168,7 +180,6 @@ if (!window.supabase) {
       if (error) throw error;
       status.textContent = signedInText;
       alert(`Published "${test.title}". It now appears under Tests.`);
-      loadEditList();
     } catch (err) {
       status.textContent = signedInText;
       alert('Could not upload: ' + (err.message || err));
@@ -176,6 +187,46 @@ if (!window.supabase) {
   }
 
   document.getElementById('uploadFile').addEventListener('change', e => uploadTestFile(e.target));
+
+  // Rebuilds each published test page from its saved editor data, using the current templates.
+  // Only the page HTML changes; the title, group, type and time stay as they are.
+  async function refreshAllTests() {
+    if (!confirm('Rebuild every published test with the current page design? Questions, answers and audio stay the same.')) return;
+    const btn = document.getElementById('refreshAll');
+    const status = document.getElementById('status');
+    const signedInText = status.textContent;
+    btn.disabled = true;
+    try {
+      await loadTemplates();
+      const { data, error } = await client.from('tests').select('id,title,html');
+      if (error) throw error;
+      let updated = 0;
+      const failed = [];
+      for (let i = 0; i < data.length; i++) {
+        const row = data[i];
+        status.textContent = `Updating ${i + 1} of ${data.length}: ${row.title}…`;
+        try {
+          const payload = parseTestFile(row.html);
+          const source = payload.editor && Array.isArray(payload.editor.parts) ? payload.editor : fromRuntime(payload);
+          const built = buildTestPage(source, row.id);
+          if (built.errors.length) throw new Error(built.errors.join('; '));
+          const { error: upErr } = await client.from('tests').update({ html: built.html }).eq('id', row.id);
+          if (upErr) throw upErr;
+          updated++;
+        } catch (err) {
+          failed.push(`${row.title}: ${err.message || err}`);
+        }
+      }
+      status.textContent = signedInText;
+      alert(`Updated ${updated} of ${data.length} tests.` + (failed.length ? '\n\nNot updated:\n' + failed.join('\n') : ''));
+    } catch (err) {
+      status.textContent = signedInText;
+      alert('Could not update the tests: ' + (err.message || err));
+    } finally {
+      btn.disabled = false;
+    }
+  }
+  document.getElementById('refreshAll').addEventListener('click', refreshAllTests);
 }
 </script>
 </body>

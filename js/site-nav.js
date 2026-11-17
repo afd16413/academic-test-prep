@@ -20,7 +20,7 @@
         '<a id="navPractice" href="tests.html"' + (here === "tests.html" ? ' aria-current="page"' : "") + ">Practice</a>" +
         '<a id="navResults" href="results.html"' + (here === "results.html" ? ' aria-current="page"' : "") + ' hidden>My results</a>' +
         '<a id="navAdmin" href="admin.html" hidden>Admin panel</a>' +
-        link("contact.html", "Contact") +
+        link("contact.html", "Contact").replace("<a ", '<a id="navContact" ') +
         '<span id="authSlot">' + link("login.html", "Sign in") + "</span>" +
       "</nav>" +
     "</div>";
@@ -50,6 +50,7 @@
             document.getElementById("navAdmin").hidden = false;
             document.getElementById("navPractice").hidden = true;
             document.getElementById("navResults").hidden = true;
+            document.getElementById("navContact").hidden = true;
           } else {
             document.getElementById("navResults").hidden = false;
           }

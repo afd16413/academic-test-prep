@@ -20,7 +20,9 @@ function compile(d) {
     const hasAudio = type === "listening" && !!p.audioUrl;
     if (type === "listening" && !p.audioUrl) errors.push(`${where}: upload the audio file`);
     const hasImage = type === "writing" && !!p.imageUrl;
-    if (!paragraphs.length && !hasAudio && !hasImage) errors.push(`${where}: add at least one ${type === "writing" ? "task prompt" : "paragraph"}`);
+    // Listening and speaking passages don't need paragraphs (listening needs audio, checked above).
+    const needsText = type === "reading" || type === "writing";
+    if (needsText && !paragraphs.length && !hasAudio && !hasImage) errors.push(`${where}: add at least one ${type === "writing" ? "task prompt" : "paragraph"}`);
     const groups = (type === "writing" || type === "speaking")
       ? []
       : (p.groups || []).map((g, gi) => compileGroup(g, next, errors, `${where}, question group ${gi + 1}`));
